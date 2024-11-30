@@ -10,7 +10,6 @@ import { AppDispatch } from "../../../store/store";
 import { getBaseLimit } from "../../../store/slices/dataSlice";
 
 interface IProps {
-  isOpen: boolean;
   setGender: (gender: string) => void;
 }
 
@@ -21,10 +20,11 @@ export interface IFormData {
   sizes: number[];
 }
 
-const CatalogFilter: FC<IProps> = ({ isOpen, setGender }) => {
+const CatalogFilter: FC<IProps> = ({ setGender }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { register, handleSubmit, setValue } = useForm<IFormData>({
+    // Устанавливаем начальные значения для полей формы.
     defaultValues: {
       startPrice: 0,
       endPrice: 99999,
@@ -35,7 +35,7 @@ const CatalogFilter: FC<IProps> = ({ isOpen, setGender }) => {
 
   const onSubmit: SubmitHandler<IFormData> = (data) => {
     setGender(data.gender);
-
+    // Вызываем асинхронный экшен `fetchSneakers`, передавая ему объект с параметрами фильтрации:
     dispatch(
       fetchSneakers({
         priceFrom: data.startPrice,
@@ -48,7 +48,6 @@ const CatalogFilter: FC<IProps> = ({ isOpen, setGender }) => {
 
   return (
     <CatalogFilterStyle
-      className={isOpen ? "open" : ""}
       onSubmit={handleSubmit(onSubmit)}
     >
       <div>
@@ -63,7 +62,7 @@ const CatalogFilter: FC<IProps> = ({ isOpen, setGender }) => {
       <button
         type="reset"
         onClick={() =>
-          onSubmit({ startPrice: 0, endPrice: 99999, gender: "", sizes: [0] })
+          onSubmit({ startPrice: 0, endPrice: 99999, gender: "", sizes: [36] })
         }
       >
         Сбросить
