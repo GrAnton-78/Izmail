@@ -42,8 +42,8 @@ const CatalogItems: FC<IProps> = ({ gender }) => {
       </ul>
       <Btn fnc={() => dispatch(changeLimit())} total={limit >= sneakers.length}>
         Показать еще
-        <p>В каталоге {sneakers.length} товаров.</p>
       </Btn>
+      <p>В каталоге {sneakers.length} товаров.</p>
     </CatalogItemsStyle>
   );
 };
